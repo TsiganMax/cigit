@@ -141,6 +141,7 @@ function render() {
   $('lockStats').innerHTML = stats.map((s) => `<div class="summary-card card"><div class="metric-top"><span>${esc(s[0])}</span></div><strong>${s[1]}</strong><small>${esc(s[2])}</small></div>`).join('');
 
   const log = st && Array.isArray(st.log) ? st.log : [];
+  if (window.AURA_REAL) window.AURA_REAL(on ? st : null);   // справжні дані на «Панелі», поки замок онлайн
   $('lockLogList').innerHTML = log.length ? log.map((l) => `<div>${esc(l)}</div>`).join('') : '<div class="muted">Подій ще немає.</div>';
 }
 
