@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1212">
+<meta name="description" content="AURA HOME — авторська система керування інтелектуальним простором. Інтерактивна офлайн-демонстрація.">
+<title>AURA HOME — Living Intelligence</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="styles.css">
+<script src="config.js"></script>
+<script src="app.js" defer></script>
+<script src="lock.js" defer></script>
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="sidebar">
+    <div class="brand" aria-label="AURA HOME"><div class="brand-symbol"><span></span><span></span><span></span><span></span></div><div><strong>AURA<span>HOME</span></strong><small>LIVING INTELLIGENCE / 02</small></div></div>
+    <div class="sidebar-label">ПРОСТІР</div>
+    <nav class="nav" id="nav" aria-label="Основна навігація">
+      <button class="nav-link" data-page="lock"><span class="nav-icon" data-icon="lock"></span><span>Мій замок</span><span class="nav-key">00</span></button>
+      <button class="nav-link active" data-page="overview" aria-current="page"><span class="nav-icon" data-icon="dashboard"></span><span>Панель</span><span class="nav-key">01</span></button>
+      <button class="nav-link" data-page="floor" ><span class="nav-icon" data-icon="layers"></span><span>План будинку</span><span class="nav-key">02</span></button>
+      <button class="nav-link" data-page="devices"><span class="nav-icon" data-icon="sliders"></span><span>Пристрої</span><span class="nav-key">03</span></button>
+      <button class="nav-link" data-page="scenes"><span class="nav-icon" data-icon="sparkles"></span><span>Сценарії</span><span class="nav-key">04</span></button>
+    </nav>
+    <div class="sidebar-label sidebar-group">АНАЛІТИКА ТА ЗАХИСТ</div>
+    <nav class="nav" aria-label="Додаткові розділи">
+      <button class="nav-link" data-page="energy"><span class="nav-icon" data-icon="bolt"></span><span>Енергія</span><span class="nav-key">05</span></button>
+      <button class="nav-link" data-page="security"><span class="nav-icon" data-icon="shield"></span><span>Безпека</span><span class="nav-key">06</span></button>
+      <button class="nav-link" data-page="automations"><span class="nav-icon" data-icon="workflow"></span><span>Автоматизації</span><span class="nav-key">07</span></button>
+      <button class="nav-link" data-page="activity"><span class="nav-icon" data-icon="activity"></span><span>Активність</span><span class="nav-key">08</span></button>
+    </nav>
+    <div class="sidebar-bottom"><div class="home-avatar">A</div><div><strong>Мій простір</strong><small>Приватний будинок · Demo</small></div><button class="icon-button" data-action="settings" aria-label="Налаштування" title="Налаштування"><span data-icon="settings"></span></button></div>
+  </aside>
+
+  <div class="main-shell">
+    <header class="topbar"><div class="crumb"><span class="topbar-light"></span><span>AURA / <span id="crumbLabel">Панель</span></span></div>
+      <div class="header-actions"><span class="demo-indicator"><i></i> OFFLINE DEMO</span><span class="header-time" id="clock">—</span><button class="icon-button" data-action="help" aria-label="Як показувати проєкт" title="Як показувати"><span data-icon="help"></span></button><button class="icon-button" data-page="activity" aria-label="Журнал подій" title="Журнал подій"><span data-icon="bell"></span><span class="notification-dot"></span></button></div>
+    </header>
+    <main id="main" tabindex="-1">
+      <div class="page-head"><div><div class="eyebrow" id="eyebrow">ПРОСТІР, ЩО ВІДЧУВАЄ</div><h1 id="pageTitle">Вітаємо вдома<span class="period">.</span></h1><p class="page-description" id="pageSubtitle">Кожна деталь вашого дому — в одному ритмі.</p></div><div class="page-head-right"><button class="text-button" data-action="help"><span data-icon="play"></span> Швидка екскурсія</button><button class="primary-button" data-action="smart-demo"><span data-icon="sparkles"></span> Показати магію</button></div></div>
+      <section class="page hidden" id="page-lock" aria-label="Мій замок">
+        <div class="card lock-login" id="lockLogin">
+          <span class="eyebrow">Ц.І.Г.І.Т · РЕАЛЬНИЙ ЗАМОК</span>
+          <h2>Вхід</h2>
+          <p class="muted" id="lockLoginNote">Увійди акаунтом, який має доступ до замка.</p>
+          <form id="lockForm" autocomplete="on">
+            <label>Email<input id="lockEmail" type="email" autocomplete="username" required></label>
+            <label>Пароль<input id="lockPass" type="password" autocomplete="current-password" required></label>
+            <button class="primary-button" type="submit" id="lockLoginBtn">Увійти</button>
+            <p class="lock-error" id="lockError" role="alert"></p>
+          </form>
+        </div>
+        <div class="hidden" id="lockPanel">
+          <div class="card lock-hero" id="lockHero">
+            <div class="lock-hero-top">
+              <span class="eyebrow">Ц.І.Г.І.Т · РЕАЛЬНИЙ ЗАМОК</span>
+              <span class="lock-online" id="lockOnline"><i></i> зʼєднання…</span>
+            </div>
+            <div class="lock-state">
+              <div class="lock-big" id="lockBig">—</div>
+              <p class="muted" id="lockSub">Чекаю дані від замка…</p>
+            </div>
+            <div class="button-row lock-buttons">
+              <button class="primary-button lock-btn" data-lock="open" id="lockOpenBtn">🔓 Відкрити двері</button>
+              <button class="outline-button lock-btn" data-lock="arm" id="lockArmBtn">🔒 Охорона</button>
+              <button class="outline-button lock-btn" data-lock="light" id="lockLightBtn">🔦 Ліхтар</button>
+            </div>
+          </div>
+          <div class="summary-grid" id="lockStats"></div>
+          <div class="card lock-log">
+            <div class="section-header compact"><div><span class="eyebrow">З ЗАМКА</span><h2>Останні події</h2></div>
+            <button class="outline-button small" id="lockLogout">Вийти</button></div>
+            <div id="lockLogList" class="lock-log-list"></div>
+          </div>
+        </div>
+      </section>
+      <section class="page" id="page-overview" aria-label="Панель">
+        <div class="hero-grid"><section class="hero-panel"><div class="hero-top"><span class="eyebrow light">THE HOME IS ALIVE</span><span class="hero-kicker">AURA / 02.6</span></div><div class="hero-copy"><h2>Дім, який<br><em>розуміє тебе.</em></h2><p>Світло, комфорт та безпека працюють разом. А ти просто живеш.</p><button class="hero-button" data-page="floor">Дослідити простір <span data-icon="arrow-up-right"></span></button></div><div class="hero-illustration" aria-hidden="true"><div class="orb orb-one"></div><div class="orb orb-two"></div><svg viewBox="0 0 580 330" role="img" aria-label="Стилізований сучасний будинок"><defs><linearGradient id="houseFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e9dcc3"/><stop offset="1" stop-color="#b5ab9e"/></linearGradient><linearGradient id="houseGlass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a2c8bc" stop-opacity=".86"/><stop offset="1" stop-color="#182e2d"/></linearGradient><filter id="shadow"><feGaussianBlur stdDeviation="11"/></filter></defs><ellipse cx="301" cy="292" rx="233" ry="18" fill="#183d38" opacity=".35" filter="url(#shadow)"/><path d="M84 174L274 96L486 171L302 259Z" fill="#111a19" opacity=".45"/><path d="M112 180L263 99L465 168L317 250Z" fill="#5e6c66"/><path d="M112 180V252L317 313V250Z" fill="url(#houseFace)"/><path d="M317 250L465 168V241L317 313Z" fill="#9f988a"/><path d="M133 194L231 220V274L133 250Z" fill="url(#houseGlass)"/><path d="M240 222L297 239V289L240 273Z" fill="#384843"/><path d="M329 252L451 185V231L329 297Z" fill="url(#houseGlass)"/><path d="M152 144L271 80L470 149L464 172L263 105L116 184L102 171Z" fill="#30423f"/><path d="M152 144L271 80L470 149L350 211Z" fill="#425750"/><path d="M116 184L263 105L464 172" stroke="#d3d1bc" stroke-width="6" fill="none"/><path d="M133 194L231 220V274L133 250ZM329 252L451 185V231L329 297Z" stroke="#dcd2be" stroke-width="4" fill="none"/><path d="M160 201V257M194 213V266M367 231V278M409 209V255" stroke="#a8d2bf" stroke-opacity=".45" stroke-width="3"/><path d="M104 255L306 321L485 249" stroke="#d4bc87" stroke-width="6" fill="none" opacity=".65"/></svg></div><div class="hero-bottom"><div class="living-line"><span></span> SYSTEM IN HARMONY</div><div>DESIGNED FOR LIFE <span class="cross">✳</span></div></div></section>
+          <div class="hero-side"><div class="ambient-card card"><div class="card-top"><span class="eyebrow">АТМОСФЕРА ЗАРАЗ</span><span data-icon="sun" class="subtle-icon"></span></div><div class="climate-center"><div class="temp" id="heroTemp">23.4<span>°</span></div><div><strong>Ідеальний баланс</strong><small>Температура всередині</small></div></div><div class="climate-bottom"><div><span data-icon="droplets"></span> <span id="humidityRead">45%</span> вологість</div><div><span data-icon="wind"></span> Чисте повітря</div></div></div>
+            <div class="mode-card card"><div class="card-top"><span class="eyebrow">АКТИВНИЙ СЦЕНАРІЙ</span><span data-icon="sparkles" class="subtle-icon"></span></div><div class="mode-center"><div class="mode-icon" id="currentSceneIcon"><span data-icon="home"></span></div><div><strong id="currentSceneName">Я вдома</strong><p id="currentSceneDesc">Простір налаштовано для життя</p></div></div><button class="card-link" data-page="scenes">Змінити атмосферу <span data-icon="arrow-right"></span></button></div></div></div>
+        <div class="summary-grid" id="overviewStats"></div>
+        <div class="section-header"><div><span class="eyebrow">ONE TOUCH, MANY CHANGES</span><h2>Настрої простору</h2></div><button class="section-action" data-page="scenes">Усі сценарії <span data-icon="arrow-right"></span></button></div>
+        <div class="scenes-row" id="quickScenes"></div>
+        <div class="two-up"><section class="card overview-rooms"><div class="section-header compact"><div><span class="eyebrow">ROOM CONTROL</span><h2>Кімнати</h2></div><button class="section-action" data-page="floor">План <span data-icon="arrow-right"></span></button></div><div class="room-tiles" id="roomTiles"></div></section><section class="card energy-preview"><div class="section-header compact"><div><span class="eyebrow">REAL-TIME SIMULATION</span><h2>Енергія</h2></div><span class="small-chip">РОЗРАХУНОК</span></div><div class="big-power" id="energyPreviewPower">—<span> W</span></div><p class="muted" id="energyPreviewNote">Поточне розрахункове навантаження</p><div id="miniChart" class="mini-chart" aria-label="Симульований графік використання енергії"></div><button class="card-link" data-page="energy">Переглянути аналітику <span data-icon="arrow-right"></span></button></section></div>
+      </section>
+      <section class="page hidden" id="page-floor" aria-label="План будинку"><div class="floor-layout"><div class="card floor-card"><div class="floor-head"><div><span class="eyebrow">INTERACTIVE ARCHITECTURE</span><h2>Перший поверх</h2><p class="muted">Натисни на кімнату, щоб побачити пристрої.</p></div><span class="small-chip">2D · LIVE DEMO</span></div><div class="floorplan" id="floorplan"></div><div class="floor-legend"><span><i class="legend-green"></i> Світло активне</span><span><i class="legend-dark"></i> Світло вимкнене</span><span><i class="legend-select"></i> Обрана кімната</span></div></div><div class="floor-right"><div class="card selected-room-card"><span class="eyebrow">SELECTED SPACE</span><h2 id="selectedRoomTitle">Вітальня</h2><p class="muted" id="selectedRoomDesc"></p><div id="selectedRoomDevices"></div></div><div class="card floor-safety"><div class="little-icon"><span data-icon="shield"></span></div><div><strong id="floorSecurityText">Дім під наглядом</strong><p class="muted">Демонстраційна логіка захисту</p></div><button class="section-action" data-page="security"><span data-icon="arrow-right"></span></button></div></div></div></section>
+      <section class="page hidden" id="page-devices" aria-label="Пристрої"><div class="toolbar card"><div class="search-box"><span data-icon="search"></span><input type="search" id="deviceSearch" placeholder="Знайти пристрій або кімнату..." aria-label="Пошук пристроїв" autocomplete="off"></div><div class="filter-row" id="deviceFilters"></div></div><div class="device-grid" id="devicesGrid"></div><p class="muted empty-state hidden" id="devicesEmpty">За цим запитом пристроїв не знайдено.</p></section>
+      <section class="page hidden" id="page-scenes" aria-label="Сценарії"><div class="info-strip"><span data-icon="sparkles"></span><p>Сценарій синхронізує декілька пристроїв одночасно. Це миттєва зміна настрою, а не окремі команди.</p></div><div class="scene-grid" id="sceneGrid"></div><div class="section-header"><div><span class="eyebrow">LIVING SYSTEM</span><h2>Що відбувається під час сценарію</h2></div></div><div class="card" id="sceneExplainer"></div></section>
+      <section class="page hidden" id="page-energy" aria-label="Енергія"><div class="energy-summary" id="energyStats"></div><div class="energy-layout"><div class="card energy-chart-card"><div class="section-header compact"><div><span class="eyebrow">ENERGY INTELLIGENCE</span><h2>Динаміка споживання</h2></div><div class="segmented" role="group" aria-label="Період графіка"><button class="selected" data-period="day">24 год</button><button data-period="week">7 днів</button><button data-period="month">30 днів</button></div></div><div id="energyChart" class="energy-chart" role="img" aria-label="Демонстраційні дані енергоспоживання"></div><p class="muted chart-disclaimer">Симульовані історичні показники, не вимірювання лічильника. Поточна потужність розраховується з увімкнених пристроїв.</p></div><div class="card consumers-card"><span class="eyebrow">TOP CONSUMERS</span><h2>Куди йде енергія</h2><div id="topConsumers"></div><div class="tariff-field"><label for="tariff">Тариф, грн/кВт·год</label><input id="tariff" type="number" inputmode="decimal" min="0.01" max="1000" step="0.01" value="4.32"><span class="muted">Змінюй для власного прикладу</span></div></div></div></section>
+      <section class="page hidden" id="page-security" aria-label="Безпека"><div class="security-hero card"><div class="security-hero-content"><span class="eyebrow">SECURITY CONTROL / SIMULATION</span><div class="shield-large"><span data-icon="shield-check"></span></div><h2 id="securityTitle">Простір під контролем</h2><p id="securitySubtitle">Сигналізацію вимкнено. Датчики працюють у демонстраційному режимі.</p><div class="button-row"><button class="primary-button" id="armButton" data-action="toggle-alarm">Активувати охорону</button><button class="outline-button" data-action="simulate-motion">Імітувати рух</button></div></div><div class="security-orbit" aria-hidden="true"></div></div><div class="security-grid" id="securityGrid"></div><div class="section-header"><div><span class="eyebrow">SENSOR LAB</span><h2>Тестування реакцій</h2></div></div><div class="simulation-grid"><button class="sim-button" data-sim="motion"><span data-icon="scan"></span><strong>Рух біля входу</strong><small>Перевірка охоронного правила</small></button><button class="sim-button" data-sim="leak"><span data-icon="droplets"></span><strong>Протікання води</strong><small>Попередження та журнал</small></button><button class="sim-button" data-sim="smoke"><span data-icon="flame"></span><strong>Датчик диму</strong><small>Критичний сигнал у демо</small></button><button class="sim-button" data-sim="reset"><span data-icon="check-circle"></span><strong>Скинути тривоги</strong><small>Повернути нормальний стан</small></button></div><p class="safety-note"><span data-icon="info"></span> Ця демонстрація не під'єднана до замків, камер, сповіщувачів чи охоронної служби і не може використовуватися замість справжньої системи безпеки.</p></section>
+      <section class="page hidden" id="page-automations" aria-label="Автоматизації"><div class="info-strip"><span data-icon="workflow"></span><p>Автоматизації працюють за принципом «подія → умова → дія». Нижче — правила, які можна перевірити через симулятор.</p></div><div class="automation-grid" id="automationGrid"></div><div class="card automation-lab"><div><span class="eyebrow">TEST BENCH</span><h2>Лабораторія подій</h2><p class="muted">Зміни стан сенсора та перевір, що зробить система.</p></div><div class="auto-controls"><label for="simTemp">Температура сенсора: <strong id="simTempValue">23°C</strong></label><input type="range" id="simTemp" min="16" max="35" value="23" step="1"><button class="primary-button" data-action="apply-temp">Запустити перевірку</button></div></div></section>
+      <section class="page hidden" id="page-activity" aria-label="Активність"><div class="card activity-panel"><div class="section-header compact"><div><span class="eyebrow">EVERY ACTION MATTERS</span><h2>Журнал подій</h2></div><div class="button-row"><button class="outline-button small" data-action="export-log"><span data-icon="download"></span> Експорт</button><button class="outline-button small" data-action="clear-log">Очистити</button></div></div><div class="activity-list" id="activityList"></div></div></section>
+    </main>
+    <footer class="footer"><span>AURA HOME © 2026</span><span>«МІЙ ЗАМОК» — РЕАЛЬНЕ КЕРУВАННЯ · ІНШІ РОЗДІЛИ — ДЕМО</span></footer>
+  </div>
+</div>
+<div id="toastRegion" class="toast-region" role="status" aria-live="polite"></div>
+<dialog id="appDialog" class="app-dialog"><div id="dialogContent"></div></dialog>
+</body></html>

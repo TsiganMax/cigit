@@ -1,0 +1,15 @@
+{
+  "name": "AURA HOME — Living Intelligence",
+  "short_name": "AURA HOME",
+  "description": "Інтерактивний прототип системи розумного будинку",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0d1212",
+  "theme_color": "#0d1212",
+  "lang": "uk",
+  "icons": [
+    {"src":"assets/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"assets/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}
