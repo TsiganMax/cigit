@@ -32,3 +32,14 @@
 .lock-log-list div{padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
 .lock-log-list div:last-child{border-bottom:0}
 @media(max-width:690px){.sidebar{grid-template-columns:repeat(9,1fr)!important}.lock-big{font-size:31px}.lock-buttons{display:grid;grid-template-columns:1fr 1fr}.lock-buttons .lock-btn:first-child{grid-column:1/-1}.lock-buttons .lock-btn{min-width:0;white-space:normal;padding:14px 10px;font-size:13px}}
+.guard-card{cursor:pointer;transition:border-color .2s}
+.guard-card:hover{border-color:var(--lime)}
+.guard-card strong{color:var(--lime)}
+.guard-card.armed{border-color:#6a3b32;background:#261d1b}
+.guard-card.armed strong{color:var(--red)}
+.demo-indicator{cursor:pointer}
+.demo-indicator.off{color:var(--red);border-color:#6a3b32}
+.demo-indicator.off i{background:var(--red);box-shadow:0 0 10px var(--red)}
+.security-hero.real-armed{background:radial-gradient(circle at 83% 47%,#6a3b32 0%,transparent 39%),#261d1b}
+.security-hero.real-alarm{background:radial-gradient(circle at 83% 47%,#a8372a 0%,transparent 45%),#2b1512}
+.security-hero button[disabled]{opacity:.45;cursor:not-allowed}

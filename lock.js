@@ -103,6 +103,7 @@ function render() {
   const o = $('lockOnline');
   o.className = 'lock-online ' + (on ? 'on' : 'off');
   o.innerHTML = `<i></i> ${on ? 'замок онлайн' : (st ? 'замок офлайн' : 'немає даних від замка')}`;
+  setIndicator(on ? 'ОНЛАЙН' : 'ОФЛАЙН', on);
 
   const hero = $('lockHero');
   const alarm = st && (st.fire || st.heat);
@@ -141,7 +142,7 @@ function render() {
   $('lockStats').innerHTML = stats.map((s) => `<div class="summary-card card"><div class="metric-top"><span>${esc(s[0])}</span></div><strong>${s[1]}</strong><small>${esc(s[2])}</small></div>`).join('');
 
   const log = st && Array.isArray(st.log) ? st.log : [];
-  if (window.AURA_REAL) window.AURA_REAL(on ? st : null);   // справжні дані на «Панелі», поки замок онлайн
+  if (window.AURA_REAL) window.AURA_REAL(st ? Object.assign({}, st, { online: on }) : null);   // справжні дані на «Панелі»
   $('lockLogList').innerHTML = log.length ? log.map((l) => `<div>${esc(l)}</div>`).join('') : '<div class="muted">Подій ще немає.</div>';
 }
 
@@ -156,6 +157,7 @@ async function poll() {
     render();
   } catch (e) {
     if (e.logout || e.denied) { logout(e.message); return; }
+    if (Date.now() - lastOk > 15000) { setIndicator('ОФЛАЙН', false); }
     if (Date.now() - lastOk > 15000) { $('lockOnline').className = 'lock-online off'; $('lockOnline').innerHTML = '<i></i> немає інтернету'; }
   }
   if (!document.hidden) pollTimer = setTimeout(poll, POLL_MS);
@@ -187,9 +189,30 @@ async function send(action) {
   poll();
 }
 
+// Команда з підтвердженням (для Панелі та Безпеки)
+function action(a) {
+  if (busy) return;
+  if (!auth) { toast('Спершу увійди в «Мій замок»', true); return; }
+  if (!isOnline()) { toast('Замок офлайн', true); return; }
+  if (st.fire || st.heat) { toast('Пожежна тривога — керування недоступне', true); return; }
+  if (a === 'open' && st.armed) { toast('Спершу зніміть охорону', true); return; }
+  const q = { open: 'Відкрити двері?', arm: 'Поставити під охорону?', disarm: 'Зняти з охорони?' }[a];
+  if (q && !confirm(q)) return;
+  send(a);
+}
+window.CIGIT_ACTION = action;
+
+function setIndicator(text, on) {
+  const i = $('lockIndicator'); if (!i) return;
+  i.classList.toggle('off', !on);
+  i.querySelector('b').textContent = text;
+}
+
 function logout(msg) {
   clearTimeout(pollTimer);
   auth = null; st = null;
+  if (window.AURA_REAL) window.AURA_REAL(null);
+  setIndicator('ОФЛАЙН', false);
   try { localStorage.removeItem(LS); } catch {}
   showLogin(msg || '');
 }
@@ -213,12 +236,19 @@ function init() {
     btn.disabled = false;
   });
   $('lockLogout').addEventListener('click', () => logout(''));
+  const ind = $('lockIndicator');
+  if (ind) ind.addEventListener('click', () => window.AURA_NAV && window.AURA_NAV('lock'));
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-lock]');
     if (!b || b.disabled) return;
     const a = b.dataset.lock;
     if (a === 'open' && !confirm('Відкрити двері?')) return;
     send(a);
+  });
+  // Картка «Охорона» на Панелі: натиск — поставити / зняти охорону
+  document.addEventListener('click', (e) => {
+    const c = e.target.closest('[data-guard]');
+    if (c && st) action(st.armed ? 'disarm' : 'arm');
   });
   document.addEventListener('visibilitychange', () => { if (!document.hidden && auth) poll(); });
   setInterval(() => { if (auth && st) render(); }, 10000);   // оновлює «онлайн/офлайн», навіть якщо дані не змінились
